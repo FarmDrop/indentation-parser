@@ -102,7 +102,6 @@ class IndentationParser
         leaf = node_stack.pop
         handle_leaf leaf
         node_stack.last.add new_node
-        #handle_node new_node
         node_stack.push new_node
       elsif new_node.indentation() - 1 > lastone.indentation #too large indentation -> raise an error
         raise "ou neei"
