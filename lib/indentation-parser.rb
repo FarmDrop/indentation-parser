@@ -32,6 +32,12 @@ class IndentationParser
     end
   end
   
+  class RootNode < Node
+    def initialize
+      super "root", -1
+    end
+  end
+  
   def initialize
     @handlers = {}
     yield self
@@ -74,7 +80,7 @@ class IndentationParser
 
   def read text, root_value
     
-    root = IndentationParser::Node.new "root", -1
+    root = IndentationParser::RootNode.new
 
     root.set_value root_value
 
@@ -88,19 +94,19 @@ class IndentationParser
       
       lastone = node_stack.last
       
-      if new_node.indentation() - 1 == lastone.indentation 
+      if new_node.indentation() - 1 == lastone.indentation #the current node is indented to the previous node
         lastone.add new_node
-        handle_node new_node
+        handle_node lastone unless lastone.is_a? RootNode
         node_stack.push new_node
-      elsif new_node.indentation == lastone.indentation        
+      elsif new_node.indentation == lastone.indentation #the current node is on the same level as the previous node
         leaf = node_stack.pop
         handle_leaf leaf
         node_stack.last.add new_node
-        handle_node new_node
+        #handle_node new_node
         node_stack.push new_node
-      elsif new_node.indentation() - 1 > lastone.indentation
+      elsif new_node.indentation() - 1 > lastone.indentation #too large indentation -> raise an error
         raise "ou neei"
-      else
+      else #indentation is less than previous node. Pop everything from stack until parent is found
         leaf = node_stack.pop
         handle_leaf leaf
         (lastone.indentation - new_node.indentation).times do 

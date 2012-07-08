@@ -8,6 +8,12 @@ describe IndentationParser do
         parent[source.to_sym] = node
         node
       end
+      
+      p.on_leaf do |parent, indentation, source|
+        node = {}
+        parent[source.to_sym] = node
+        node
+      end
     end
     
     source = IO.read("spec/test.mylang")
@@ -36,5 +42,7 @@ describe IndentationParser do
     }
     
     result.should eq expected_hash
+    
+    puts result
   end
 end
