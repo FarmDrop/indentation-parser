@@ -1,0 +1,21 @@
+planet = World
+  continent = Europe
+    country = Switzerland
+      population = 8
+      currency = CHF
+      specialities:
+        chocolate
+        cheese
+    country = England
+      population = 40
+      currency = GBP
+      specialities:
+        fish'n'chips
+        drum'n'bass
+  continent = America
+    country = USA
+      population = 100
+      currency = USD
+      specialities:
+        hamburgers
+        baseball

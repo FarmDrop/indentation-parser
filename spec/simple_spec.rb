@@ -1,7 +1,7 @@
 require 'indentation-parser'
 
 describe IndentationParser do
-  it 'parses indented files' do
+  it "parses indented files" do
     parser = IndentationParser.new do |p|
       p.else do |parent, indentation, source|
         node = {}
