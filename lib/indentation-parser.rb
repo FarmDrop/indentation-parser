@@ -62,8 +62,12 @@ class IndentationParser
   end
   
   def handle_leaf node
-    node_value = @on_leaf.call node.parent.value, node.indentation, node.source if @on_leaf
-    node.set_value node_value
+    if @on_leaf
+      node_value = @on_leaf.call node.parent.value, node.indentation, node.source
+      node.set_value node_value
+    else
+      handle_node node
+    end
   end
 
   def on regex, &block
@@ -88,7 +92,7 @@ class IndentationParser
     
     text.each_line do |line|
       line.chomp!
-      next if line.length == 0
+      next if line.length == 0 || line =~ /^\s*$/
       indentation, source = parse_line line
       new_node = IndentationParser::Node.new source, indentation
       
@@ -112,7 +116,6 @@ class IndentationParser
           node_stack.pop          
         end
         node_stack.last.add new_node
-        handle_node new_node
         node_stack.push new_node
       end
     end
