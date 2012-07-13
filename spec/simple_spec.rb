@@ -42,7 +42,5 @@ describe IndentationParser do
     }
     
     result.should eq expected_hash
-    
-    puts result
   end
 end

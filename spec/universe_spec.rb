@@ -52,6 +52,16 @@ describe IndentationParser do
     universe.planets = []
     result = parser.read(source, universe).value
     
-    puts result.planets.first.continents.first.countries
+    countries = result.planets.first.continents.first.countries
+    
+    switzerland = countries.shift
+    switzerland.name.should eq "Switzerland"
+    switzerland.population.should eq 8
+    switzerland.specialities.should eq ["chocolate", "cheese"]
+    
+    england = countries.shift
+    england.name.should eq "England"
+    england.population.should eq 40
+    england.specialities.should eq ["fish'n'chips", "drum'n'bass"]
   end
 end
