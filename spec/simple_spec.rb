@@ -16,7 +16,7 @@ describe IndentationParser do
       end
     end
     
-    source = IO.read("spec/test.mylang")
+    source = IO.read("spec/material/test.mylang")
     
     result = parser.read(source, {}).value
     

@@ -1,14 +1,11 @@
 require 'indentation-parser'
 
+Universe = Struct.new(:planets)
+Planet = Struct.new(:name, :continents)
+Continent = Struct.new(:name, :countries)
+Country = Struct.new(:name, :population, :currency, :specialities)
 
 describe IndentationParser do
-  
-  before :each do
-    Universe = Struct.new(:planets)
-    Planet = Struct.new(:name, :continents)
-    Continent = Struct.new(:name, :countries)
-    Country = Struct.new(:name, :population, :currency, :specialities)
-  end
   
   it "parses a .universe file" do
     parser = IndentationParser.new do |p|
@@ -45,13 +42,13 @@ describe IndentationParser do
         parent.specialities = []
       end      
       
-      p.else do |parent, indentation, source|
+      p.as_a_child_of Array do |parent, indentation, source|
         parent << source  
       end
       
     end
     
-    source = IO.read("spec/the.universe")
+    source = IO.read("spec/material/the.universe")
     universe = Universe.new
     universe.planets = []
     result = parser.read(source, universe).value
