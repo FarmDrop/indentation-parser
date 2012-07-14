@@ -41,7 +41,7 @@ describe IndentationParser do
         parent.currency = captures[1]
       end
       
-      p.on /specialities:/ do |parent, indentation, source, captures|
+      p.on /specialities/ do |parent, indentation, source, captures|
         parent.specialities = []
       end      
       
