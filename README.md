@@ -20,37 +20,42 @@ Assume you have this structure:
 
 You want to create an output which you can use like this:
 
-	puts output.this.is.an.example
-	# => "First example"
+```ruby
+puts output.this.is.an.example
+# => "First example"
 
-	puts output.this.is.the.second.one
-	# => "Second example"
+puts output.this.is.the.second.one
+# => "Second example"
 
-	puts output.this.serves.as.another.example
-	# => "Third example"
+puts output.this.serves.as.another.example
+# => "Third example"
+```
 
 You write a parser like so:
 
-	parser = IndentationParser.new do |p|
-      p.default do |parent, indentation, source|
-        node = OpenStruct.new
-        parent.send("#{source}=", node)
-        node
-      end
-      
-      p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
-        node = captures[2]
-        parent.send("#{captures[1]}=", node)
-        node
-      end
-    end
+```ruby
+parser = IndentationParser.new do |p|
+  p.default do |parent, indentation, source|
+    node = OpenStruct.new
+    parent.send("#{source}=", node)
+    node
+  end
+  
+  p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
+    node = captures[2]
+    parent.send("#{captures[1]}=", node)
+    node
+  end
+end
+```
 
 Then you read your special syntax from a file, parse it and celebrate:
 
-	source = IO.read("path/to/file")
-	output = parser.read(source, OpenStruct.new).value
+```ruby
+source = IO.read("path/to/file")
+output = parser.read(source, OpenStruct.new).value
 
-	puts output.this.is.an.example
-    puts output.this.is.the.second.one
-    puts output.this.serves.as.another.example
-
+puts output.this.is.an.example
+puts output.this.is.the.second.one
+puts output.this.serves.as.another.example
+```
