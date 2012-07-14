@@ -1,11 +1,15 @@
 require 'indentation-parser'
 
-Universe = Struct.new(:planets)
-Planet = Struct.new(:name, :continents)
-Continent = Struct.new(:name, :countries)
-Country = Struct.new(:name, :population, :currency, :specialities)
 
 describe IndentationParser do
+  
+  before :each do
+    Universe = Struct.new(:planets)
+    Planet = Struct.new(:name, :continents)
+    Continent = Struct.new(:name, :countries)
+    Country = Struct.new(:name, :population, :currency, :specialities)
+  end
+  
   it "parses a .universe file" do
     parser = IndentationParser.new do |p|
       

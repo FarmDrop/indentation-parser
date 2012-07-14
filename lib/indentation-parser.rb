@@ -5,7 +5,7 @@ require "indentation-parser/handlers"
 
 class IndentationParser
 
-  def initialize
+  def initialize    
     @node_handlers = {}
     @leaf_handlers = {}
     @child_of_handlers = {}

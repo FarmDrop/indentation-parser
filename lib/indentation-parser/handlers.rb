@@ -1,4 +1,5 @@
 class IndentationParser
+
   def execute_regex_handler node, regex, block
     captures = regex.match node.source
     if captures
@@ -9,12 +10,14 @@ class IndentationParser
     false
   end
   
-  def execute_child_of_handler node, parent, block
-    @child_of_handlers.each do |key, value|
-      if parent == key
-        #execute stuff!
-      end
-    end      
+  def execute_child_of_handler node
+    handler = @child_of_handlers[node.parent.value.class]
+    if handler
+      node_value = handler.call node.parent.value, node.indentation, node.source
+      node.set_value node_value
+      return true
+    end
+    false
   end
 
   def try_to_handle handlers, node
@@ -27,6 +30,10 @@ class IndentationParser
   end
 
   def handle_node node
+    handled = execute_child_of_handler node
+    
+    return handled if handled
+    
     handled = try_to_handle @node_handlers, node
     if not handled and @default
       node_value = @default.call node.parent.value, node.indentation, node.source if @default

@@ -17,7 +17,7 @@ class IndentationParser
     @on_leaf = block
   end  
   
-  def as_a_child_of parent_node, &block
-    
+  def as_a_child_of parent_node_type, &block
+    @child_of_handlers[parent_node_type] = block
   end
 end
