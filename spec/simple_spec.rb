@@ -3,7 +3,7 @@ require 'indentation-parser'
 describe IndentationParser do
   it "parses indented files" do
     parser = IndentationParser.new do |p|
-      p.else do |parent, indentation, source|
+      p.default do |parent, indentation, source|
         node = {}
         parent[source.to_sym] = node
         node
