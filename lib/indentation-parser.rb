@@ -44,7 +44,7 @@ class IndentationParser
 
       else 
         #indentation is less than previous node. 
-        #Pop everything from stack until parent is found
+        #pop everything from stack until parent is found
         handle_less_indentation lastone, new_node, node_stack
       end
     end
