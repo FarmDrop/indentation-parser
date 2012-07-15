@@ -1,8 +1,10 @@
-[![Build Status](https://secure.travis-ci.org/ssmm/indentation-parser.png)](http://travis-ci.org/ssmm/indentation-parser)
 
-# Indentation-Parser
+# Indentation-Parser 
 
-A parser for indented files.
+[![Build Status](https://secure.travis-ci.org/ssmm/indentation-parser.png)](http://travis-ci.org/ssmm/indentation-parser) 
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/ssmm/indentation-parser)
+
+Parses source code that defines context by indention.
 
 ## How
 
