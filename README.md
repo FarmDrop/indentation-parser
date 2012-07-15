@@ -116,15 +116,16 @@ The next line assigns the second [capture](http://www.ruby-doc.org/core-1.9.3/Re
 which, with the example source given, will be `"First example"`in the very first case, to a 
 local variable called `node`. 
 
-Since we defined our parser to create `OpenStruct`s in every default case, this is what actually
-happens:
+Again, at this point, we know that our parent is an `OpenStruct`. We define an attribute on it, 
+with the name talken from our captures object. This is what happens for each of the three cases:
 
 ```ruby
-parent.example = node
+#parent.send("#{captures[1]}=", node) translates to
+parent.example = "First example"
+parent.one = "Second example"
+parent.example = "Third example"
 ```
 
-`parent` is an `OpenStruct`, and we define an attribute called `example` on it.
-
-Actually, the last line is not required, since there will not be any child to this node, so
-there is no block that would need the parent object as a parameter. You can return it anyways,
-just for the sake of thoroughness.
+Actually, the last line of the second block is not required, since there will not be any child
+to this node, so there is no block that would need the parent object as a parameter. You can
+return it anyways, just for the sake of thoroughness.
