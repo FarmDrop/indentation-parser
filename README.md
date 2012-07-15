@@ -4,7 +4,7 @@
 [![Build Status](https://secure.travis-ci.org/ssmm/indentation-parser.png)](http://travis-ci.org/ssmm/indentation-parser) 
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/ssmm/indentation-parser)
 
-Parses source code that defines context by indention.
+Parses source code that defines context by indentation.
 
 ## How
 
@@ -53,7 +53,7 @@ parser = IndentationParser.new do |p|
 end
 ```
 
-Then you read your special syntax from a file, parse it and celebrate:
+Then you read your special syntax from a file and parse it:
 
 ```ruby
 source = IO.read("path/to/file")
@@ -66,3 +66,4 @@ puts output.this.serves.as.another.example
 
 # Details
 
+Coming soon.
