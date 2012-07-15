@@ -68,7 +68,7 @@ puts output.this.serves.as.another.example
 
 Lets take a closer look at the example above first:
 
-###### First block
+##### First block
 
 ```ruby
 p.default do |parent, indentation, source|
@@ -86,6 +86,8 @@ parameters you get from the parser inside your block are:
 spaces (no tabs). One indentation = two spaces.
 - The `source`, basically the whole line the parser currently evaluates without indentation.
 
+*Now, step by step:*
+
 We define a new `OpenStruct` instance and store it in a variable called `node`.
 
 Since we know that all parent objects are going to be `OpenStruct`s too, we set an attribute on
@@ -95,7 +97,7 @@ Last but not least, we return the node. **This is very important!** In
 order to be able to pass the `parent` parameter to the block, the parser maintains an internal
 node structure. Only if you pass the node as a return value, the parser can store it there!
 
-###### Second block
+##### Second block
 
 ```ruby
 p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
@@ -107,17 +109,18 @@ end
 
 The regular expression `/([^ ]+) : (.+)/` will match with a text that has the format 
 `"text_without_spaces : Any text"`. Every time the parser comes along a line of code which
-matches this expression, it will execute the block you provide. 
+matches this expression, it will execute the block you provide. There is an additional parameter
+you can use in this block:
+- The `captures`, the result of matching the
+[regular expression](http://www.ruby-doc.org/core-1.9.3/Regexp.html) to the source.
 
-There is an additional parameter you can use in the block:
-- The `captures`, the result of matching the regular expression to the source.
+*Step by step:*
 
-The next line assigns the second [capture](http://www.ruby-doc.org/core-1.9.3/Regexp.html),
-which, with the example source given, will be `"First example"`in the very first case, to a 
-local variable called `node`. 
+We assign the second capture, which, with the example source given, will be `"First example"` in
+the very first case, to a local variable called `node`. 
 
 Again, at this point, we know that our parent is an `OpenStruct`. We define an attribute on it, 
-with the name talken from our captures object. This is what happens for each of the three cases:
+with the name taken from our captures object. This is what happens for each of the three cases:
 
 ```ruby
 #parent.send("#{captures[1]}=", node) translates to
