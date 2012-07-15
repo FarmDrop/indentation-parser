@@ -61,3 +61,6 @@ puts output.this.is.an.example
 puts output.this.is.the.second.one
 puts output.this.serves.as.another.example
 ```
+
+# Details
+
