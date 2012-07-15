@@ -84,12 +84,22 @@ spaces (no tabs). One indentation = two spaces.
 
 ```ruby
 node = OpenStruct.new
+```
+
+We define a new `OpenStruct` instance and store it in a variable called `node`.
+
+```ruby
 parent.send("#{source}=", node)
+```
+
+Since we know that all parent objects are going to be `OpenStruct`s too, we set an attribute on
+it. The name of the attribute is given by the `source` parameter.
+
+```ruby
 node
 ```
 
-We define a new `OpenStruct` instance, and set it as an attribute on our parent object, which is
-an `OpenStruct`, too. Last but not least, we return the node. **This is very important!** In 
+Last but not least, we return the node. **This is very important!** In 
 order to be able to pass the `parent` parameter to the block, the parser maintains an internal
 node structure. Only if you pass the node as a return value, the parser can store it there!
 
@@ -127,3 +137,10 @@ parent.example = node
 
 `parent` is an `OpenStruct`, and we define an attribute called `example` on it.
 
+```ruby
+node
+```
+
+Actually, this line is not required, since there will not be any child to this node, so there is
+no block that would need the parent object as a parameter. You can return it anyways, just for
+the sake of thoroughness.
