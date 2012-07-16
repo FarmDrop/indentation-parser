@@ -1,3 +1,4 @@
+_This is not complete yet! More to come in the next weeks, so stay tuned._
 
 # Indentation-Parser 
 
@@ -39,17 +40,17 @@ You write a parser like so:
 
 ```ruby
 parser = IndentationParser.new do |p|
-  p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
-    node = captures[2]
-    parent.send("#{captures[1]}=", node)
-    node
-  end
-
   p.default do |parent, indentation, source|
     node = OpenStruct.new
     parent.send("#{source}=", node)
     node
   end  
+  
+  p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
+    node = captures[2]
+    parent.send("#{captures[1]}=", node)
+    node
+  end
 end
 ```
 

@@ -4,15 +4,14 @@ require 'ostruct'
 describe IndentationParser do
   it "does what is written in the readme" do
     parser = IndentationParser.new do |p|
-      p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
-        node = captures[2]
-        parent.send("#{captures[1]}=", node)
-        node
-      end
-
       p.default do |parent, indentation, source|
         node = OpenStruct.new
         parent.send("#{source}=", node)
+        node
+      end
+      p.on /([^ ]+) : (.+)/ do |parent, indentation, source, captures|
+        node = captures[2]
+        parent.send("#{captures[1]}=", node)
         node
       end
     end
