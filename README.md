@@ -1,5 +1,3 @@
-_This is not complete yet! More to come in the next weeks, so stay tuned._
-
 # Indentation-Parser 
 
 [![Build Status](https://secure.travis-ci.org/ssmm/indentation-parser.png)](http://travis-ci.org/ssmm/indentation-parser) 
