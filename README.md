@@ -68,6 +68,8 @@ puts output.this.serves.as.another.example
 
 ## Hooks
 
+The following hooks are available:
+
 ```ruby
 p.on /regex/ do |parent, source, captures|
   #...

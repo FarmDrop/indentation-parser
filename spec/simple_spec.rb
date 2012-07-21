@@ -10,9 +10,9 @@ describe IndentationParser do
       end
       
       p.on_leaf do |parent, source|
-        node = {}
-        parent[source.to_sym] = node
-        node
+        parent[:leafs] = Array.new  unless parent[:leafs]
+        parent[:leafs] << source
+        source
       end
     end
     
@@ -22,22 +22,21 @@ describe IndentationParser do
     
     expected_hash = {
       :this => {
-        :structure => {},
         :is => {
           :crazy => {
-            :and => {}
+            :leafs => ["and"]
           }
         },
-        :weird => {}
+        :leafs => ["structure", "weird"]
       },
       :and => {
         :does => {
           :not => {
-            :make => {}
+            :leafs => ["make"]
           },
-          :any => {}
+          :leafs => ["any"]
         },
-        :sense => {}
+        :leafs => ["sense"]
       }
     }
     
