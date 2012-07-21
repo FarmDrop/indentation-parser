@@ -3,13 +3,13 @@ require 'indentation-parser'
 describe IndentationParser do
   it "parses indented files" do
     parser = IndentationParser.new do |p|
-      p.default do |parent, indentation, source|
+      p.default do |parent, source|
         node = {}
         parent[source.to_sym] = node
         node
       end
       
-      p.on_leaf do |parent, indentation, source|
+      p.on_leaf do |parent, source|
         node = {}
         parent[source.to_sym] = node
         node

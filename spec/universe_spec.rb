@@ -10,39 +10,39 @@ describe IndentationParser do
   it "parses a .universe file" do
     parser = IndentationParser.new do |p|
       
-      p.on /planet = ([a-zA-Z]+)/ do |parent, indentation, source, captures|
+      p.on /planet = ([a-zA-Z]+)/ do |parent, source, captures|
         planet = Planet.new captures[1]
         planet.continents = []
         parent.planets << planet
         planet
       end
       
-      p.on /continent = ([a-zA-Z]+)/ do |parent, indentation, source, captures|
+      p.on /continent = ([a-zA-Z]+)/ do |parent, source, captures|
         continent = Continent.new captures[1]
         continent.countries = []
         parent.continents << continent
         continent
       end
       
-      p.on /country = ([a-zA-Z]+)/ do |parent, indentation, source, captures|
+      p.on /country = ([a-zA-Z]+)/ do |parent, source, captures|
         country = Country.new captures[1]
         parent.countries << country
         country
       end
       
-      p.on /population = ([0-9]+)/ do |parent, indentation, source, captures|
+      p.on /population = ([0-9]+)/ do |parent, source, captures|
         parent.population = captures[1].to_i
       end
       
-      p.on /currency = ([a-zA-Z]+)/ do |parent, indentation, source, captures|
+      p.on /currency = ([a-zA-Z]+)/ do |parent, source, captures|
         parent.currency = captures[1]
       end
       
-      p.on /specialities/ do |parent, indentation, source, captures|
+      p.on /specialities/ do |parent, source, captures|
         parent.specialities = []
       end      
       
-      p.as_a_child_of Array do |parent, indentation, source|
+      p.as_a_child_of Array do |parent, source|
         parent << source  
       end
       
