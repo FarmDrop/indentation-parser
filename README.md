@@ -62,8 +62,6 @@ puts output.this.is.the.second.one
 puts output.this.serves.as.another.example
 ```
 
-# Details
-
 ## Hooks
 
 The following hooks are available:

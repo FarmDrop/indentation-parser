@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/indentation-parser/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = "indentation-parser"
-  gem.version       = Indentation::Parser::VERSION
-  
+  gem.version       = "1.0.0"
+
   gem.authors       = ["Samuel Müller"]
   gem.email         = ["mueller.samu@gmail.com"]
   gem.description   = %q{Parses source code that defines context by indentation.}
