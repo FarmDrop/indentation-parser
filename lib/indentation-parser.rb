@@ -39,7 +39,7 @@ class IndentationParser
 
       elsif new_node.indentation() - 1 > previous_node.indentation 
         #too large indentation -> raise an error
-        raise "ou neei"
+        raise "Invalid indentation"
 
       else 
         #indentation is less than previous node. 
