@@ -1,4 +1,3 @@
-require "indentation-parser/version"
 require "indentation-parser/node"
 require "indentation-parser/hooks"
 require "indentation-parser/handlers"
