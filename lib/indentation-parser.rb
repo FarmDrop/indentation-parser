@@ -47,7 +47,7 @@ class IndentationParser
         handle_less_indentation previous_node, new_node, node_stack
       end
     end
-    handle_leaf node_stack.last
+    handle_node node_stack.last, true
     root
   end
 
@@ -59,14 +59,14 @@ class IndentationParser
 
   def handle_same_indentation new_node, node_stack
     leaf = node_stack.pop
-    handle_leaf leaf
+    handle_node leaf, true
     node_stack.last.add new_node
     node_stack.push new_node
   end
 
   def handle_less_indentation previous_node, new_node, node_stack
     leaf = node_stack.pop
-    handle_leaf leaf
+    handle_node leaf, true
     (previous_node.indentation - new_node.indentation).times do 
       node_stack.pop          
     end

@@ -33,25 +33,39 @@ class IndentationParser
     handled
   end
 
-  def handle_node node
+  def handle_node node, leaf = false
     handled = execute_child_of_handler node
-    
-    return handled if handled
-    
+    return true if handled
+
     handled = try_to_handle @node_handlers, node
-    if not handled and @default
+    return true if handled
+
+    if leaf
+      handled = handle_leaf node
+    end
+
+    return true if handled
+
+    if @default
       node_value = call_handler @default, node if @default
       node.set_value node_value
+      return true
+    else
+      return false
     end
   end
   
   def handle_leaf node
     handled = try_to_handle @leaf_handlers, node
-    if not handled and @on_leaf
+
+    return true if handled
+
+    if @on_leaf
       node_value = call_handler @on_leaf, node
       node.set_value node_value
+      return true
     else
-      handle_node node
+      return false
     end
   end
   
