@@ -8,7 +8,7 @@ class IndentationParser
     def add node
       node.set_parent self
       @subnodes << node
-    end  
+    end
     def parent
       @parent
     end
@@ -28,7 +28,7 @@ class IndentationParser
       @value = value
     end
   end
-  
+
   class RootNode < Node
     def initialize
       super "root", -1

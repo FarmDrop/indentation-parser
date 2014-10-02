@@ -1,6 +1,6 @@
 class IndentationParser
 
-  def call_handler block, node    
+  def call_handler block, node
     block.call(node.parent.value, node.source)
   end
 
@@ -13,7 +13,7 @@ class IndentationParser
     end
     false
   end
-  
+
   def execute_child_of_handler node
     handler = @child_of_handlers[node.parent.value.class]
     if handler
@@ -28,7 +28,7 @@ class IndentationParser
     handled = false
     handlers.each do |key, value|
       result = execute_regex_handler node, key, value
-      handled = true if result      
+      handled = true if result
     end
     handled
   end
@@ -54,7 +54,7 @@ class IndentationParser
       return false
     end
   end
-  
+
   def handle_leaf node
     handled = try_to_handle @leaf_handlers, node
 
@@ -68,5 +68,5 @@ class IndentationParser
       return false
     end
   end
-  
+
 end

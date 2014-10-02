@@ -1,5 +1,5 @@
 class IndentationParser
-  def on regex, &block    
+  def on regex, &block
     @node_handlers[regex] = block
   end
 
@@ -15,8 +15,8 @@ class IndentationParser
 
   def on_leaf &block
     @on_leaf = block
-  end  
-  
+  end
+
   def as_a_child_of parent_node_type, &block
     @child_of_handlers[parent_node_type] = block
   end
