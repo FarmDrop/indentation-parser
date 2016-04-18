@@ -19,3 +19,7 @@ planet = Earth
       specialities:
         hamburgers
         baseball
+      description:
+        A line of text
+
+        Another line after a whitespace line

@@ -23,11 +23,16 @@ class IndentationParser
 
     text.each_line do |line|
       line.chomp!
-      next if line.length == 0 || line =~ /^\s*$/
-
-      indentation, source = parse_line line
-      new_node = IndentationParser::Node.new source, indentation
       previous_node = node_stack.last
+
+      if line.length == 0 || line =~ /^\s*$/
+        indentation = previous_node.indentation
+        source = ''
+      else
+        indentation, source = parse_line line
+      end
+
+      new_node = IndentationParser::Node.new source, indentation
 
       if new_node.indentation() - 1 == previous_node.indentation
         #the current node is indented to the previous node
