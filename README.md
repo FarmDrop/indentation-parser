@@ -95,3 +95,37 @@ p.as_a_child_of Type do |parent, source|
   #...
 end
 ```
+
+## Non-indented blocks
+
+If you need to not have some part of the code parsed for some reason e.g.
+you want to have a block of text that will later be turned into Markdown,
+you can define a parser that sets the value of the block's parent to a class
+that respoonds to `stop_indentation?` by returning `true`.
+
+For example:
+
+```ruby
+class DocNode < String
+  def initialize
+    @stop_indentation = false
+    super
+  end
+
+  # Set this to true in a handler to ignore all indentation in the child
+  # text. Good for markdown formatting etc.
+  def stop_indentation!
+    @stop_indentation = true
+  end
+
+  def stop_indentation?
+    @stop_indentation
+  end
+end
+
+parser = IndentationParser.new do |p|
+  p.on /description/ do |parent, source, captures|
+    parent.description = DocNode.new.tap(&:stop_indentation!)
+  end
+end
+```

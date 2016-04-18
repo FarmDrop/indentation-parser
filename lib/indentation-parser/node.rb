@@ -4,6 +4,7 @@ class IndentationParser
       @source = source
       @indentation = indentation
       @subnodes = []
+      @stop_indentation = false
     end
     def add node
       node.set_parent self

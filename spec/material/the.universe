@@ -21,5 +21,6 @@ planet = Earth
         baseball
       description:
         A line of text
+          an indented line that should have the whitespace included
 
-        Another line after a whitespace line
+        Another line after a whitespace line which should have been included

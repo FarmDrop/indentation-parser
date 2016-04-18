@@ -34,10 +34,12 @@ class IndentationParser
 
       new_node = IndentationParser::Node.new source, indentation
 
-      if new_node.indentation() - 1 == previous_node.indentation
+      if should_not_indent_further?(new_node, previous_node)
+        new_node = node_with_leading_whitespace(line, previous_node)
+        handle_same_indentation new_node, node_stack
+      elsif new_node.indentation() - 1 == previous_node.indentation
         #the current node is indented to the previous node
         handle_by_one_indentation previous_node, new_node, node_stack
-
       elsif new_node.indentation == previous_node.indentation
         #the current node is on the same level as the previous node
         handle_same_indentation new_node, node_stack
@@ -56,9 +58,31 @@ class IndentationParser
     root
   end
 
+  def node_with_leading_whitespace(line, previous_node)
+    IndentationParser::Node.new line_with_leading_whitespace(line, previous_node), previous_node.indentation
+  end
+
+  def should_not_indent_further?(new_node, previous_node)
+    new_node.indentation() - 1 >= previous_node.indentation &&
+      (previous_node.parent &&
+        previous_node.parent.value.respond_to?(:stop_indentation?) &&
+        previous_node.parent.value.stop_indentation?)
+  end
+
+  def line_with_leading_whitespace(line, previous_node)
+    line[(previous_node.indentation * 2)..line.length]
+  end
+
   def handle_by_one_indentation previous_node, new_node, node_stack
     previous_node.add new_node
     handle_node previous_node unless previous_node.is_a? RootNode
+    node_stack.push new_node
+  end
+
+  def handle_stopped_indentation new_node, node_stack
+    leaf = node_stack.pop
+    handle_node leaf, true
+    node_stack.last.add new_node
     node_stack.push new_node
   end
 

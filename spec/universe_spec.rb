@@ -4,6 +4,22 @@ Universe = Struct.new(:planets)
 Planet = Struct.new(:name, :continents)
 Continent = Struct.new(:name, :countries)
 Country = Struct.new(:name, :population, :currency, :specialities, :description)
+class DocNode < String
+  def initialize
+    @stop_indentation = false
+    super
+  end
+
+  # Set this to true in a handler to ignore all indentation in the child
+  # text. Good for markdown formatting etc.
+  def stop_indentation!
+    @stop_indentation = true
+  end
+
+  def stop_indentation?
+    @stop_indentation
+  end
+end
 
 describe IndentationParser do
   it "parses a .universe file" do
@@ -42,7 +58,7 @@ describe IndentationParser do
       end
 
       p.on /description/ do |parent, source, captures|
-        parent.description = ''
+        parent.description = DocNode.new.tap(&:stop_indentation!)
       end
 
       p.as_a_child_of Array do |parent, source|
@@ -50,8 +66,13 @@ describe IndentationParser do
       end
 
       p.on_leaf do |parent, source|
-        parent << "\n" if parent.length != 0
-        parent << source.strip
+        if parent.class.ancestors.include? String
+          parent << "\n" if parent && parent.length != 0
+          val = source
+          val.strip! unless parent.stop_indentation?
+          parent << val
+          val
+        end
       end
     end
 
@@ -73,6 +94,8 @@ describe IndentationParser do
     england.specialities.should eq ["fish'n'chips", "drum'n'bass"]
 
     america = result.planets.first.continents[1].countries.first
-    america.description.should eq "A line of text\n\nAnother line after a whitespace line"
+    expected = "A line of text\n  an indented line that should have the whitespace"\
+    " included\n\nAnother line after a whitespace line which should have been included"
+    america.description.should eq expected
   end
 end
