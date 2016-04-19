@@ -1,5 +1,4 @@
 class IndentationParser
-
   def call_handler block, node
     block.call(node.parent.value, node.source)
   end
@@ -68,5 +67,4 @@ class IndentationParser
       return false
     end
   end
-
 end

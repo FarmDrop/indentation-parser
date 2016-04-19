@@ -3,7 +3,6 @@ require "indentation-parser/hooks"
 require "indentation-parser/handlers"
 
 class IndentationParser
-
   def initialize
     @node_handlers = {}
     @leaf_handlers = {}

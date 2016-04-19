@@ -3,7 +3,7 @@ require 'indentation-parser'
 Universe = Struct.new(:planets)
 Planet = Struct.new(:name, :continents)
 Continent = Struct.new(:name, :countries)
-Country = Struct.new(:name, :population, :currency, :specialities, :description)
+Country = Struct.new(:name, :population, :currency, :specialities, :description, :details)
 class DocNode < String
   def initialize
     @stop_indentation = false
@@ -61,18 +61,22 @@ describe IndentationParser do
         parent.description = DocNode.new.tap(&:stop_indentation!)
       end
 
+      p.on /details/ do |parent, source, captures|
+        parent.details = ''
+      end
+
       p.as_a_child_of Array do |parent, source|
         parent << source
       end
 
       p.on_leaf do |parent, source|
+        val = source
+        val.strip! unless parent && parent.respond_to?(:stop_indentation?) && parent.stop_indentation?
         if parent.class.ancestors.include? String
           parent << "\n" if parent && parent.length != 0
-          val = source
-          val.strip! unless parent.stop_indentation?
           parent << val
-          val
         end
+        val
       end
     end
 
@@ -97,5 +101,6 @@ describe IndentationParser do
     expected = "A line of text\n  an indented line that should have the whitespace"\
     " included\n\nAnother line after a whitespace line which should have been included"
     america.description.should eq expected
+    america.details.should eq '## title'
   end
 end

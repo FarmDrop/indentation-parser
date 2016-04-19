@@ -24,3 +24,5 @@ planet = Earth
           an indented line that should have the whitespace included
 
         Another line after a whitespace line which should have been included
+      details:
+        ## title
