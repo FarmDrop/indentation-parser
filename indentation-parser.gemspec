@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name          = "indentation-parser"
-  gem.version       = "1.0.3"
+  gem.version       = "1.0.4-fd"
 
   gem.authors       = ["Samuel Müller"]
   gem.email         = ["mueller.samu@gmail.com"]
